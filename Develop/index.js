@@ -125,8 +125,7 @@ const toContinue = ()=>{
         fillFormIntern();
     }else{
         generateHTML(team)
-        fs.writeFile("team-member.html",generateHTML(team),(err)=>{err? console.log(err):""})
-    
+        fs.writeFile("team-member-sheet.html",generateHTML(team),(err)=>{err? console.log(err):""})
     }
 
 })
