@@ -6,6 +6,7 @@ const Manager = require("./lib/Manager")
 const Inter = require("./lib/Intern")
 const generateHTML = require("./util/generateHtml")
 const Intern = require("./lib/Intern")
+const team = []
 
 
 const fillFormManager = ()=>{
@@ -39,6 +40,7 @@ const fillFormManager = ()=>{
 
 ]).then((data) => {
     const manager = new Manager(data.name,data.id,data.email,data.officenumber)
+    team.push(manager);
     // console.log(manager)
     if(data.position === "Engineer"){
         fillFormEngineer();
@@ -72,6 +74,7 @@ const fillFormEngineer =()=> {
         }
     ]).then((data) => {
         const engineer = new Engineer(data.name,data.id,data.email,data.githubname)
+        team.push(engineer)
         toContinue()
         // console.log(engineer)
 })
@@ -101,6 +104,7 @@ const fillFormIntern =()=> {
         }
     ]).then((data) => {
         const intern = new Intern(data.name,data.id,data.email,data.school)
+        team.push(intern)
         toContinue();
         // console.log(intern)
 })
@@ -120,7 +124,9 @@ const toContinue = ()=>{
     }else if(data.position ==="Intern") {
         fillFormIntern();
     }else{
-        generateHTML.generateTeam()
+        generateHTML(team)
+        fs.writeFile("team-member.html",generateHTML(team),(err)=>{err? console.log(err):""})
+    
     }
 
 })
